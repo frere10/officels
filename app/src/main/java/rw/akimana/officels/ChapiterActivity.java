@@ -33,8 +33,8 @@ public class ChapiterActivity extends AppCompatActivity {
            course_name = (String) bundle.get("course_name");
            course_weight = (String) bundle.get("course_weight");
         }
-        tvCourseDisplay = (TextView)findViewById(R.id.tv_course_display);
-        recyclerView = (RecyclerView)findViewById(R.id.rv_chapiters);
+        tvCourseDisplay = findViewById(R.id.tv_course_display);
+        recyclerView = findViewById(R.id.rv_chapiters);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);

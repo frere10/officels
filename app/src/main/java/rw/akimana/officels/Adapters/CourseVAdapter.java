@@ -18,7 +18,7 @@ import rw.akimana.officels.R;
 public class CourseVAdapter extends RecyclerView.Adapter<CourseVAdapter.RecyclerVHolder> {
 
     Context context;
-    List<Course> listCourse = Collections.emptyList();
+    List<Course> listCourse;
     int currentPosition = 0;
     public onItemClickListener mItemClickListener;
 
@@ -30,16 +30,14 @@ public class CourseVAdapter extends RecyclerView.Adapter<CourseVAdapter.Recycler
         void onItemClickListener(View view, int position, Course myCourse);
     }
     public class RecyclerVHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public CardView mCardView;
         public TextView tvTitle, tvAssessms, tvChapiters, tvCreatedAt, tvNameShort;
         public RecyclerVHolder(View v){
             super(v);
-//            mCardView = (CardView) v.findViewById(R.id.card_view);
-            tvTitle = (TextView) v.findViewById(R.id.tv_c_title);
-            tvAssessms = (TextView) v.findViewById(R.id.tv_assignemt);
-            tvChapiters = (TextView) v.findViewById(R.id.tv_chapiters);
-            tvCreatedAt = (TextView) v.findViewById(R.id.tv_created_at);
-            tvNameShort = (TextView) v.findViewById(R.id.tv_name_short);
+            tvTitle = v.findViewById(R.id.tv_c_title);
+            tvAssessms = v.findViewById(R.id.tv_assignemt);
+            tvChapiters = v.findViewById(R.id.tv_chapiters);
+            tvCreatedAt = v.findViewById(R.id.tv_created_at);
+            tvNameShort = v.findViewById(R.id.tv_name_short);
 
             v.setOnClickListener(this);
         }
