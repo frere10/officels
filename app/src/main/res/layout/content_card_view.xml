@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/rl_content_info"
+        app:layout_heightPercent="60%">
+        <TextView
+            android:id="@+id/tv_content_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
+            android:text="Contentsd sdfjgasjdhf asj asjashf ajg ajsd jasd jasdg jasdjassdf ksd ksd ksd ksd dks "
+            android:textColor="#343434" />
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content_detail"
+            android:src="@drawable/ic_launcher_background"
+            android:id="@+id/img_content"/>
+        <TextView
+            android:id="@+id/tv_c_created_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dip"
+            android:layout_alignBottom="@id/img_content"
+            android:gravity="right"
+            android:text="2018-05-18 05:45"
+            android:textColor="#10bcc9"
+            android:textSize="10dip"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        app:layout_heightPercent="30%"
+        android:layout_below="@id/rl_content_info"
+        android:id="@+id/rv_comment">
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        app:layout_heightPercent="10%">
+        <EditText
+            android:id="@+id/et_send_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Comment"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_send_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+</android.support.percent.PercentRelativeLayout>

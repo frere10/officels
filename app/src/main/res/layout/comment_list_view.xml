@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/rl_conment_info"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Akimana Jean"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_com_created_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2018-05-18 05:45"
+            android:textColor="#10bcc9" />
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
+            android:layout_below="@id/tv_username"
+            android:text="Contentsd sdfjgasjdhf asj asjashf ajg ajsd jasd jasdg jasdjassdf ksd ksd ksd ksd dks "
+            android:textColor="#343434" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
