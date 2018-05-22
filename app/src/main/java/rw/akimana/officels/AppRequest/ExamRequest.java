@@ -111,12 +111,6 @@ public class ExamRequest {
                                     intent.putExtra("exam_file", exam.getFileContent());
 
                                     context.startActivity(intent);
-//                                    String pdfUrl = protocal+"://"+ipAddress+"/officels/images/ass_files/"+exam.getFileContent();
-//                                    String googleDocsUrl = "http://docs.google.com/viewer?url="+pdfUrl;
-//                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
-//                                    context.startActivity(intent);
                                 }
                             });
                             recyclerView.setAdapter(examVAdapter);

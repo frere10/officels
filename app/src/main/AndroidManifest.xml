@@ -3,11 +3,8 @@
     package="rw.akimana.officels">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".Controllers.AppController"
@@ -30,7 +27,8 @@
         <activity android:name=".ChapiterActivity" />
         <activity android:name=".ContentActivity" />
         <activity android:name=".ExerciseActivity" />
-        <activity android:name=".ViewExamActivity"></activity>
+        <activity android:name=".ViewExamActivity" />
+        <activity android:name=".AnswerActivity"></activity>
     </application>
 
 </manifest>
