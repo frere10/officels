@@ -2,6 +2,7 @@ package rw.akimana.officels.AppRequest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +29,7 @@ import rw.akimana.officels.Controllers.DatabaseHelper;
 import rw.akimana.officels.Controllers.ItemDivider;
 import rw.akimana.officels.Models.Exam;
 import rw.akimana.officels.Models.IpAddress;
+import rw.akimana.officels.ViewExamActivity;
 
 public class ExamRequest {
         private Context context;
@@ -57,13 +59,17 @@ public class ExamRequest {
 
             //Create login url
             hashMap = helper.findIpDetails();
-            if(hashMap == null) dataUrl = "http://192.168.0.122" + URL_PREFIX + chapiter_id;
+            final String protocal, ipAddress;
+            if(hashMap == null) {
+                protocal = "http";
+                ipAddress = "192.168.0.122";
+            }
             else{
                 String id = hashMap.get(IpAddress.IpAttributes.COL_ID);
-                String protocal = hashMap.get(IpAddress.IpAttributes.COL_PROTOCAL);
-                String ipAddress = hashMap.get(IpAddress.IpAttributes.COL_IPADDRESS);
-                dataUrl = protocal + "://" + ipAddress + URL_PREFIX + chapiter_id;
+                protocal = hashMap.get(IpAddress.IpAttributes.COL_PROTOCAL);
+                ipAddress = hashMap.get(IpAddress.IpAttributes.COL_IPADDRESS);
             }
+            dataUrl = protocal + "://" + ipAddress + URL_PREFIX + chapiter_id;
             StringRequest strReq = new StringRequest(Request.Method.GET,
                     dataUrl, new Response.Listener<String>() {
 
@@ -97,16 +103,19 @@ public class ExamRequest {
                             examVAdapter.setOnItemClickListener(new ExamVAdapter.onItemClickListener() {
                                 @Override
                                 public void onItemClickListener(View view, int position, Exam exam) {
-//                                    Intent intent = new Intent(context, ContentActivity.class);
+                                    Intent intent = new Intent(context, ViewExamActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                    intent.putExtra("exam_id", exam.getId());
+                                    intent.putExtra("exam_title", exam.getTitle());
+                                    intent.putExtra("exam_file", exam.getFileContent());
+
+                                    context.startActivity(intent);
+//                                    String pdfUrl = protocal+"://"+ipAddress+"/officels/images/ass_files/"+exam.getFileContent();
+//                                    String googleDocsUrl = "http://docs.google.com/viewer?url="+pdfUrl;
+//                                    Intent intent = new Intent(Intent.ACTION_VIEW);
 //                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                                    intent.putExtra("chap_id", chapiter.getId());
-//                                    intent.putExtra("chap_name", chapiter.getName());
-//                                    intent.putExtra("chap_content", chapiter.getContents());
-//                                    intent.putExtra("chap_course_id", chapiter.getCourseId());
-//                                    intent.putExtra("chap_c", chapiter.getCreated());
-//                                    intent.putExtra("chap_u", chapiter.getUpdated());
-//
+//                                    intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
 //                                    context.startActivity(intent);
                                 }
                             });
