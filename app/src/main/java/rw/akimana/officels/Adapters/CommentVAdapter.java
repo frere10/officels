@@ -42,7 +42,11 @@ public class CommentVAdapter extends RecyclerView.Adapter<CommentVAdapter.Recycl
     @Override
     public void onBindViewHolder(RecyclerVHolder holder, int position){
         Comment current = commentList.get(position);
-        holder.tvUser.setText(current.getUserName());
+        String user = current.getUserName();
+        String username = "";
+        if(user.length() > 12) username = user.substring(0, 12);
+        else username = user;
+        holder.tvUser.setText(username);
         holder.tvComment.setText(current.getComment());
         holder.tvCreatedAt.setText(current.getCreated());
     }

@@ -34,7 +34,7 @@ public class ExamRequest {
 
         private static final String TAG = "Chapter Request";
         private static final String URL_PREFIX = "/officels/apis/assmtctrl.php?list&chap=";
-        private String dataUrl, chapiter_id;
+        private String dataUrl;
 
         private HashMap<String, String> hashMap;
 
@@ -46,14 +46,13 @@ public class ExamRequest {
         private RecyclerView recyclerView;
         private ExamVAdapter examVAdapter;
 
-        public ExamRequest (Context context, RecyclerView recyclerView, String chapiter_id){
+        public ExamRequest (Context context, RecyclerView recyclerView){
             this.context = context;
             this.recyclerView = recyclerView;
             this.helper = new DatabaseHelper(context);
-            this.chapiter_id = chapiter_id;
         }
 
-        public void displayExams(){
+        public void displayExams(String chapiter_id){
             String cancel_req_tag = "Exams ";
 
             //Create login url
@@ -78,14 +77,14 @@ public class ExamRequest {
 
                         if (!error) {
 //                        JSONObject  = jObj.getJSONObject("user");
-                            JSONArray array = jObj.getJSONArray("chapiters");
+                            JSONArray array = jObj.getJSONArray("assments");
                             for (int i = 0; i < array.length(); i++){
                                 JSONObject chapObj = array.getJSONObject(i);
                                 exam = new Exam();
 
                                 exam.setId(chapObj.getString("id"));
                                 exam.setTitle(chapObj.getString("title"));
-                                exam.setMarks(chapObj.getString("marks"));
+                                exam.setMarks("Marks: "+chapObj.getString("marks"));
                                 exam.setFileContent(chapObj.getString("content"));
                                 exam.setCreated(chapObj.getString("created_at"));
                                 exam.setUpdated(chapObj.getString("updated_at"));
@@ -93,7 +92,7 @@ public class ExamRequest {
                                 arrayList.add(exam);
                             }
                             examVAdapter = new ExamVAdapter(context, arrayList);
-                            recyclerView.addItemDecoration(new ItemDivider(context, LinearLayoutManager.VERTICAL, 16));
+//                            recyclerView.addItemDecoration(new ItemDivider(context, LinearLayoutManager.VERTICAL, 16));
 
                             examVAdapter.setOnItemClickListener(new ExamVAdapter.onItemClickListener() {
                                 @Override

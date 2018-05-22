@@ -23,10 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_exam_title"
         android:layout_marginTop="1dip"
-        android:layout_centerHorizontal="true"
         android:text="Marks"
+        android:layout_alignParentRight="true"
         android:textColor="#343434"
-        android:textSize="10dip" />
+        android:textSize="20dp" />
 
     <!-- Rightend Duration -->
     <TextView
