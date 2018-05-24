@@ -236,22 +236,9 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                 bytesRead = fileInputStream.read(buffer,0,bufferSize);
 
                 //loop repeats till bytesRead = -1, i.e., no bytes are left to read
-                int total = 0;
-                int byteRead = 0;
-                int byteSize = 1024;
                 while (bytesRead > 0){
-                    total += byteRead;
                     //write the bytes read from inputstream
                     dataOutputStream.write(buffer,0,bufferSize);
-//                    progress = (int) ((total * 100) / by)
-                    final int progress = total;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tvFileName.setText("Uploading: "+progress);
-                        }
-                    });
-
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable,maxBufferSize);
                     bytesRead = fileInputStream.read(buffer,0,bufferSize);
