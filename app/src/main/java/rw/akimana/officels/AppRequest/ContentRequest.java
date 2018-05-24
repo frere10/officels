@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import rw.akimana.officels.Adapters.CommentVAdapter;
 import rw.akimana.officels.Adapters.ContentAdapter;
 import rw.akimana.officels.ContentActivity;
 import rw.akimana.officels.Controllers.AppSingleton;
@@ -178,7 +179,7 @@ public class ContentRequest {
                     boolean error = jObj.getBoolean("error");
 
                     if (!error){
-                        contentAdapter.clearAdapter();
+
                     }else {
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();

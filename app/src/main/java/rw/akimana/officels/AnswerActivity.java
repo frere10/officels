@@ -203,15 +203,26 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
 
                 //writing bytes to data outputstream
                 dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"user_id\""
+                        + lineEnd);
+                dataOutputStream.writeBytes("Content-Type: text/plain; charset=UTF-8"
+                        + lineEnd);
+                dataOutputStream.writeBytes("Content-Length: " + userId.length() + lineEnd);
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(userId + lineEnd);
+                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"exam_id\""
+                        + lineEnd);
+                dataOutputStream.writeBytes("Content-Type: text/plain; charset=UTF-8"
+                        + lineEnd);
+                dataOutputStream.writeBytes("Content-Length: " + examId.length() + lineEnd);
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(examId + lineEnd);
+                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+
                 dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"file_ans\";filename=\""
                         + selectedFilePath + "\"" + lineEnd);
-                dataOutputStream.writeBytes("Content-Disposition: x-www-form-urlencoded; name=\"exam_id\"" + lineEnd);
-                dataOutputStream.writeBytes(lineEnd);
-                dataOutputStream.writeBytes(examId);
-                dataOutputStream.writeBytes(lineEnd);
-                dataOutputStream.writeBytes("Content-Disposition: x-www-form-urlencoded; name=\"user_id\"" + lineEnd);
-                dataOutputStream.writeBytes(lineEnd);
-                dataOutputStream.writeBytes(userId);
                 dataOutputStream.writeBytes(lineEnd);
 
                 //returns no. of bytes present in fileInputStream
@@ -225,9 +236,22 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                 bytesRead = fileInputStream.read(buffer,0,bufferSize);
 
                 //loop repeats till bytesRead = -1, i.e., no bytes are left to read
+                int total = 0;
+                int byteRead = 0;
+                int byteSize = 1024;
                 while (bytesRead > 0){
+                    total += byteRead;
                     //write the bytes read from inputstream
                     dataOutputStream.write(buffer,0,bufferSize);
+//                    progress = (int) ((total * 100) / by)
+                    final int progress = total;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvFileName.setText("Uploading: "+progress);
+                        }
+                    });
+
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable,maxBufferSize);
                     bytesRead = fileInputStream.read(buffer,0,bufferSize);
