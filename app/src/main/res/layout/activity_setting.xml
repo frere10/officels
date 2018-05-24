@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
                 android:hint="IP Address"
+                android:inputType="text"
                 android:id="@+id/et_ip_address"
                 />
         </android.support.design.widget.TextInputLayout>

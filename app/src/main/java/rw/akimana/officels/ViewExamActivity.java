@@ -66,7 +66,9 @@ public class ViewExamActivity extends AppCompatActivity {
         btnDoExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AnswerActivity.class));
+                Intent intent = new Intent(getApplicationContext(), AnswerActivity.class);
+                intent.putExtra("exam_id", examId);
+                startActivity(intent);
             }
         });
     }

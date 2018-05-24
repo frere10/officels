@@ -178,7 +178,7 @@ public class ContentRequest {
                     boolean error = jObj.getBoolean("error");
 
                     if (!error){
-
+                        contentAdapter.clearAdapter();
                     }else {
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
