@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MAinActivity------";
 
     CourseRequest courseRequest;
+
+    GridLayoutManager gridLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+
+        if(width < height){
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        }else {
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        }
         recyclerView.addItemDecoration(new ItemDivider(getApplicationContext(), LinearLayoutManager.VERTICAL, 32));
         recyclerView.addItemDecoration(new ItemDivider(getApplicationContext(), LinearLayoutManager.HORIZONTAL, 32));
         recyclerView.setLayoutManager(gridLayoutManager);

@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="5dip"
-        android:background="@drawable/image_bg"
+        android:background="@drawable/rounded_rectangle_orange"
         android:padding="3dip">
 
         <TextView
