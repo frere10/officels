@@ -1,14 +1,10 @@
 package rw.akimana.officels;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,35 +12,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Map;
 
-import rw.akimana.officels.Controllers.AppController;
 import rw.akimana.officels.Controllers.DatabaseHelper;
 import rw.akimana.officels.Controllers.FilePath;
 import rw.akimana.officels.Controllers.SessionManager;
 import rw.akimana.officels.Models.IpAddress;
 
-import static rw.akimana.officels.Controllers.AppController.*;
 import static rw.akimana.officels.Controllers.SessionManager.KEY_USER_ID;
 
 public class AnswerActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,14 +36,12 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath, userId, examId, ipAddress, protocal, dataUrl;
-    private String SERVER_URL = "http://coderefer.com/extras/UploadToServer.php";
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
-    ProgressDialog dialog;
 
     SessionManager sessionManager;
-    HashMap<String, String> hashMap, ipDataMap;
+    private HashMap<String, String> hashMap;
 
     String URL_PREFIX = "/officels/apis/upload_answers.php";
     DatabaseHelper helper;
@@ -107,13 +89,11 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
         if(v== bUpload){
             //on upload button Click
             if(selectedFilePath != null){
-//                dialog = ProgressDialog.show(getApplicationContext(),"","Uploading File...",true);
                 tvFileName.setText("Uploading File...");
-
+                // creating new thread to handle Http Operations
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        //creating new thread to handle Http Operations
                         uploadFile(selectedFilePath);
                     }
                 }).start();
@@ -154,7 +134,7 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     //android upload file to server
-    public int uploadFile(final String selectedFilePath){
+    public void uploadFile(final String selectedFilePath){
         int serverResponseCode = 0;
         HttpURLConnection connection;
         DataOutputStream dataOutputStream;
@@ -179,7 +159,6 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                     tvFileName.setText("Source File Doesn't Exist: " + selectedFilePath);
                 }
             });
-            return 0;
         }else{
             try{
                 FileInputStream fileInputStream = new FileInputStream(selectedFile);
@@ -195,8 +174,6 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                 connection.setRequestProperty("ENCTYPE", "multipart/form-data");
                 connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 connection.setRequestProperty("file_ans",selectedFilePath);
-
-                // Send other parametters
 
                 //creating new dataoutputstream
                 dataOutputStream = new DataOutputStream(connection.getOutputStream());
@@ -281,7 +258,6 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                         });
 
                     } catch (final Exception e) {
-                        // JSON error
                         e.printStackTrace();
                         runOnUiThread(new Runnable() {
                             @Override
@@ -291,14 +267,8 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                             }
                         });
                     }
-//                    tvFileName.setText("File Upload completed.\n\n You can see the uploaded file here: \n\n" + fileName);
                 }
-
                 //closing the input and output streams
-//                bufferedWriter.flush();
-//                bufferedWriter.close();
-//                outputStream.flush();
-//                outputStream.close();
                 fileInputStream.close();
                 dataOutputStream.flush();
                 dataOutputStream.close();
@@ -314,18 +284,6 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
             }
-//            dialog.dismiss();
-            return serverResponseCode;
         }
-    }
-    private String getPath(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
-        Cursor cursor = loader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String result = cursor.getString(column_index);
-        cursor.close();
-        return result;
     }
 }

@@ -96,7 +96,6 @@ public class CourseRequest {
                             arrayList.add(course);
                         }
                         courseVAdapter = new CourseVAdapter(mCxt, arrayList);
-                        recyclerView.addItemDecoration(new ItemDivider(mCxt, LinearLayoutManager.VERTICAL, 16));
 
                         courseVAdapter.setOnItemClickListener(new CourseVAdapter.onItemClickListener() {
                             @Override

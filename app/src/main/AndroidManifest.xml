@@ -24,7 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingActivity" />
-        <activity android:name=".ChapiterActivity" />
+        <activity android:name=".ChapiterActivity">
+            
+        </activity>
         <activity android:name=".ContentActivity" />
         <activity android:name=".ExerciseActivity" />
         <activity android:name=".ViewExamActivity" />

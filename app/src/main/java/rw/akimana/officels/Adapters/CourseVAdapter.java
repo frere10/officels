@@ -67,14 +67,15 @@ public class CourseVAdapter extends RecyclerView.Adapter<CourseVAdapter.Recycler
         String[] fullName = current.getName().split(" ");
         String titleAbrev = "";
         for (int i = 0; i < fullName.length; i++){
-            String firstChar = String.valueOf(fullName[i].charAt(0));
-            titleAbrev.concat(firstChar);
+//            String firstChar = String.valueOf(fullName[i].charAt(0));
+            String firstChar = fullName[i].substring(0,1);
+            titleAbrev += firstChar;
         }
         holder.tvTitle.setText(current.getName());
         holder.tvAssessms.setText(current.getAssNum());
         holder.tvChapiters.setText(current.getChapNum());
         holder.tvCreatedAt.setText(current.getCreated());
-        holder.tvNameShort.setText(titleAbrev);
+        holder.tvNameShort.setText(titleAbrev.toUpperCase());
     }
     public void clearAdapter(){
         listCourse.clear();
