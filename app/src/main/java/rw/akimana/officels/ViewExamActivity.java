@@ -8,12 +8,18 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +36,7 @@ public class ViewExamActivity extends AppCompatActivity {
     HashMap<String, String> hashMap;
     DatabaseHelper helper;
 
-    ImageView ivPdf;
+    ImageView pdfView;
     TextView tvTitle;
     Button btnDoExam;
     @Override
@@ -38,7 +44,7 @@ public class ViewExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_exam);
 
-        ivPdf = findViewById(R.id.pdfView);
+        pdfView = findViewById(R.id.pdfView);
         tvTitle = findViewById(R.id.tv_header);
         btnDoExam = findViewById(R.id.btn_go_to_answer);
         Bundle bundle = getIntent().getExtras();
@@ -57,11 +63,12 @@ public class ViewExamActivity extends AppCompatActivity {
             dataUrl = protocal + "://" + ipAddress + URL_PREFIX + examFile;
         }
         tvTitle.setText(examTitle);
+
         try {
-            openPDF();
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Your phone cannot open file in the App.", Toast.LENGTH_LONG).show();
             openPdfFile(dataUrl);
+        }catch (Exception e){
+            Log.d("PDF Error", e.toString());
+            Toast.makeText(getApplicationContext(), "Your phone cannot open file in the App.", Toast.LENGTH_LONG).show();
         }
         btnDoExam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,45 +80,9 @@ public class ViewExamActivity extends AppCompatActivity {
         });
     }
     public void openPdfFile(String fileName){
-//        String pdfUrl = protocal+"://"+ipAddress+"/officels/images/ass_files/"+exam.getFileContent();
-//        String googleDocsUrl = "http://docs.google.com/viewer?url="+pdfUrl;
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.parse(fileName), "application/pdf");
         startActivity(intent);
-    }
-    @SuppressLint("NewApi")
-    private void openPDF() throws IOException {
-        File file = new File(getCacheDir(),dataUrl);
-
-        ParcelFileDescriptor fileDescriptor = null;
-        fileDescriptor = ParcelFileDescriptor.open(
-                file, ParcelFileDescriptor.MODE_READ_ONLY);
-
-        //min. API Level 21
-        PdfRenderer pdfRenderer = null;
-        pdfRenderer = new PdfRenderer(fileDescriptor);
-
-        final int pageCount = pdfRenderer.getPageCount();
-        Toast.makeText(this,
-                "pageCount = " + pageCount,
-                Toast.LENGTH_LONG).show();
-
-        //Display page 0
-        PdfRenderer.Page rendererPage = pdfRenderer.openPage(0);
-        int rendererPageWidth = rendererPage.getWidth();
-        int rendererPageHeight = rendererPage.getHeight();
-        Bitmap bitmap = Bitmap.createBitmap(
-                rendererPageWidth,
-                rendererPageHeight,
-                Bitmap.Config.ARGB_8888);
-        rendererPage.render(bitmap, null, null,
-                PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-
-        ivPdf.setImageBitmap(bitmap);
-        rendererPage.close();
-
-        pdfRenderer.close();
-        fileDescriptor.close();
     }
 }

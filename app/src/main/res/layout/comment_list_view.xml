@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_username"
         android:layout_width="wrap_content"
-        android:id="@+id/rl_conment_info"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Akimana Jean"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/tv_com_created_at"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="2018-05-18 05:45"
-            android:textColor="#10bcc9" />
-        <TextView
-            android:id="@+id/tv_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dip"
-            android:layout_below="@id/tv_username"
-            android:text="Contentsd sdfjgasjdhf asj asjashf ajg ajsd jasd jasdg jasdjassdf ksd ksd ksd ksd dks "
-            android:textColor="#343434" />
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Akimana Jean"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="6"
+        android:background="@drawable/rounded_corner"
+        android:padding="16dp"
+        android:text="Android charting application xml ui design tutorial with example."
+        android:textColor="#000" />
+    <TextView
+        android:id="@+id/tv_com_created_at"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:gravity="end"
+        android:textSize="10dp"
+        android:text="2018-05-18 05:45"
+        android:textColor="#10bcc9" />
+</LinearLayout>

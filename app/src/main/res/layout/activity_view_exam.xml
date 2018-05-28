@@ -20,12 +20,12 @@
         android:id="@+id/pdfView"
         android:layout_below="@+id/tv_header"
         android:layout_width="match_parent"
-        app:layout_heightPercent="80%"/>
+        app:layout_heightPercent="70%"/>
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_below="@id/pdfView"
         android:layout_width="match_parent"
-        app:layout_heightPercent="10%"
+        app:layout_heightPercent="20%"
         android:orientation="horizontal">
 
         <Button

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class ContentAdapter  extends RecyclerView.Adapter<ContentAdapter.Recycle
     public class RecyclerVHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView tvDetail, tvCreatedAt;
         public NetworkImageView imageViewContent;
-        public Button btnSendComment;
+        public ImageView btnSendComment;
         public EditText etComment;
         public RecyclerView rvCommentDisplay;
         public RecyclerVHolder(View v){
@@ -54,7 +55,7 @@ public class ContentAdapter  extends RecyclerView.Adapter<ContentAdapter.Recycle
             tvCreatedAt = v.findViewById(R.id.tv_c_created_at);
             imageViewContent = v.findViewById(R.id.img_content);
 
-            btnSendComment = v.findViewById(R.id.btn_send_comment);
+            btnSendComment = v.findViewById(R.id.img_send_comment);
 
             etComment = v.findViewById(R.id.et_send_comment);
 
