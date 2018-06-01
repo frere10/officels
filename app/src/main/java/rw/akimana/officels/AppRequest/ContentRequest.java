@@ -80,13 +80,11 @@ public class ContentRequest {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "Contents Response: " + response);
-//                hideDialog();
                 try {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
 
                     if (!error) {
-//                        JSONObject  = jObj.getJSONObject("user");
                         JSONArray array = jObj.getJSONArray("contents");
                         for (int i = 0; i < array.length(); i++){
                             JSONObject contentObj = array.getJSONObject(i);
@@ -115,9 +113,7 @@ public class ContentRequest {
 
                                 commentArrayList.add(comment);
                             }
-
                             content.setCommentArrayList(commentArrayList);
-
                             arrayList.add(content);
                         }
                         contentAdapter = new ContentAdapter(context, arrayList);

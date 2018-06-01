@@ -25,6 +25,10 @@
     <string name="info">Info</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="downloadStarted">Download start</string>
+    <string name="downloadCompleted">Download complete</string>
+    <string name="downloadFailed">Download fail</string>
+    <string name="downloadAgain">Download again</string>
 
     <string name="intro_message">
         <![CDATA[

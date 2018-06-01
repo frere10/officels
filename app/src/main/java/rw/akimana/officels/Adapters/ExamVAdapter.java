@@ -51,7 +51,7 @@ public class ExamVAdapter extends RecyclerView.Adapter<ExamVAdapter.RecyclerVHol
     }
     @Override
     public ExamVAdapter.RecyclerVHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.exam_list_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.exam_item_view, parent, false);
         RecyclerVHolder vh = new RecyclerVHolder(v);
         return vh;
     }

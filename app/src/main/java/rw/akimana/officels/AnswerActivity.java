@@ -248,6 +248,12 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                             message = jObj.getString("error_msg");
                         }else{
                             message = jObj.getString("success_msg");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(getApplicationContext(), MarksActivity.class));
+                                }
+                            });
                         }
                         runOnUiThread(new Runnable() {
                             @Override

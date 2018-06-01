@@ -3,11 +3,9 @@ package rw.akimana.officels.Adapters;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,7 +76,7 @@ public class ContentAdapter  extends RecyclerView.Adapter<ContentAdapter.Recycle
     }
     @Override
     public ContentAdapter.RecyclerVHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_card_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_item_view, parent, false);
         RecyclerVHolder vh = new RecyclerVHolder(v);
         return vh;
     }

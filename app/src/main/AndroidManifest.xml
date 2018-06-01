@@ -3,8 +3,8 @@
     package="rw.akimana.officels">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Controllers.AppController"
@@ -24,13 +24,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingActivity" />
-        <activity android:name=".ChapiterActivity">
-            
-        </activity>
+        <activity android:name=".ChapiterActivity"></activity>
         <activity android:name=".ContentActivity" />
         <activity android:name=".ExerciseActivity" />
         <activity android:name=".ViewExamActivity" />
-        <activity android:name=".AnswerActivity"></activity>
+        <activity android:name=".AnswerActivity" />
+        <activity android:name=".MarksActivity"></activity>
     </application>
 
 </manifest>

@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import rw.akimana.officels.Controllers.DatabaseHelper;
+import rw.akimana.officels.Controllers.DownloadTask;
 import rw.akimana.officels.Models.IpAddress;
 
 public class ViewExamActivity extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class ViewExamActivity extends AppCompatActivity {
     HashMap<String, String> hashMap;
     DatabaseHelper helper;
 
-    ImageView pdfView;
+    PDFView pdfView;
     TextView tvTitle;
     Button btnDoExam;
     @Override
@@ -65,10 +66,10 @@ public class ViewExamActivity extends AppCompatActivity {
         tvTitle.setText(examTitle);
 
         try {
-            openPdfFile(dataUrl);
+            new DownloadTask(getApplicationContext(), tvTitle, pdfView, examFile);
         }catch (Exception e){
             Log.d("PDF Error", e.toString());
-            Toast.makeText(getApplicationContext(), "Your phone cannot open file in the App.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Sorry there is an error.", Toast.LENGTH_LONG).show();
         }
         btnDoExam.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,6 @@
 package rw.akimana.officels.Adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +52,7 @@ public class ChapiterVAdapter extends RecyclerView.Adapter<ChapiterVAdapter.Recy
     }
     @Override
     public ChapiterVAdapter.RecyclerVHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chapiter_card_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chapiter_item_view, parent, false);
         RecyclerVHolder vh = new RecyclerVHolder(v);
         return vh;
     }
