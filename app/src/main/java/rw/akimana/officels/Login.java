@@ -72,6 +72,9 @@ public class Login extends AppCompatActivity {
             case R.id.action_setting:
                 startActivity(new Intent(getApplicationContext(),SettingActivity.class));
                 break;
+            case R.id.action_view_marks:
+                startActivity(new Intent(getApplicationContext(), MarksActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

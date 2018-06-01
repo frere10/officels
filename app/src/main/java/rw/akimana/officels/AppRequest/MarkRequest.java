@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,12 +44,14 @@ public class MarkRequest {
     private Mark mark;
 
     private RecyclerView recyclerView;
+    private TextView tvMarksTotal;
     private MarksVAdapter marksVAdapter;
 
-    public MarkRequest(Context context, RecyclerView recyclerView){
+    public MarkRequest(Context context, RecyclerView recyclerView, TextView tvMarksTotal){
         this.context = context;
         this.recyclerView = recyclerView;
         this.helper = new DatabaseHelper(context);
+        this.tvMarksTotal = tvMarksTotal;
     }
 
     public void displayMarks(final String userId){
@@ -77,20 +80,24 @@ public class MarkRequest {
                     if (!error) {
 //                        JSONObject  = jObj.getJSONObject("user");
                         JSONArray array = jObj.getJSONArray("marks");
+                        int totatMark = 0, totalWeight = 0;
                         for (int i = 0; i < array.length(); i++){
-                            JSONObject chapObj = array.getJSONObject(i);
+                            JSONObject marksObj = array.getJSONObject(i);
                             mark = new Mark();
 
-                            mark.setCourse(chapObj.getString("course_name"));
-                            mark.setChapiter(chapObj.getString("chap_name"));
-                            mark.setExam(chapObj.getString("exam_title"));
-                            mark.setUserMarks(chapObj.getString("user_marks"));
-                            mark.setMarksWeight(chapObj.getString("out_of"));
+                            mark.setCourse(marksObj.getString("course_name"));
+                            mark.setChapiter(marksObj.getString("chap_name"));
+                            mark.setExam(marksObj.getString("exam_title"));
+                            mark.setUserMarks(marksObj.getString("user_marks"));
+                            mark.setMarksWeight(marksObj.getString("out_of"));
 
+                            totatMark += Integer.parseInt(marksObj.getString("user_marks"));
+                            totalWeight += Integer.parseInt(marksObj.getString("out_of"));
                             arrayList.add(mark);
                         }
+                        if (totatMark!=0||totalWeight!=0)
+                            tvMarksTotal.setText(String.valueOf(totatMark)+" Out of "+String.valueOf(totalWeight));
                         marksVAdapter = new MarksVAdapter(context, arrayList);
-                        recyclerView.addItemDecoration(new ItemDivider(context, LinearLayoutManager.VERTICAL, 16));
 
                         recyclerView.setAdapter(marksVAdapter);
                     } else {
@@ -100,8 +107,6 @@ public class MarkRequest {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                }finally {
-                    marksVAdapter.clearAdapter();
                 }
             }
         }, new Response.ErrorListener() {

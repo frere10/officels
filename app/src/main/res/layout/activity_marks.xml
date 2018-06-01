@@ -7,13 +7,20 @@
     android:orientation="vertical"
     tools:context=".MarksActivity">
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         android:id="@+id/tv_text_title"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:id="@+id/tv_mark_total"
         />
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -21,5 +28,4 @@
         android:id="@+id/rv_marks_view">
 
     </android.support.v7.widget.RecyclerView>
-
 </LinearLayout>

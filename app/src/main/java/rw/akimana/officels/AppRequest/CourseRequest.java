@@ -128,7 +128,7 @@ public class CourseRequest {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Login Error: " + error.getMessage());
+                Log.e(TAG, "Course Error: " + error.getMessage());
                 Toast.makeText(mCxt, error.getMessage(), Toast.LENGTH_LONG).show();
 //                hideDialog();
             }

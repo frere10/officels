@@ -80,12 +80,16 @@ public class LoginRequest {
 //                        String userUpdated_at = user.getString("updated_at");
 
 //                         Launch User activity
-                        Intent intent = new Intent(mCxt,MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        sessionManager.createLoginSession(userId,userNames,userName,userEmail,userAccess,"","");
-                        mCxt.startActivity(intent);
+                        if(Integer.parseInt(userAccess)!=1) {
+                            Intent intent = new Intent(mCxt, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            sessionManager.createLoginSession(userId, userNames, userName, userEmail, userAccess, "", "");
+                            mCxt.startActivity(intent);
 //                        finish();
-                        Toast.makeText(mCxt, "Welcome "+userNames+"!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mCxt, "Welcome " + userNames + "!", Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(mCxt, "Sorry  " + userNames.toUpperCase() + ". Use your dashboard!", Toast.LENGTH_LONG).show();
+                        }
                     } else {
 
                         String errorMsg = jObj.getString("error_msg");

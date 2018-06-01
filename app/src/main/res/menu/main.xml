@@ -1,4 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_setting" android:title="@string/menu_setting"/>
+    <item android:id="@+id/action_view_marks" android:title="@string/menu_vew_marks"/>
     <item android:id="@+id/action_logout" android:title="@string/menu_logout"/>
 </menu>

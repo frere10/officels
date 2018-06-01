@@ -19,13 +19,14 @@ public class MarksVAdapter extends RecyclerView.Adapter<MarksVAdapter.RecyclerVH
     int currentPosition = 0;
 
     public class RecyclerVHolder extends RecyclerView.ViewHolder{
-        public TextView tvCourse, tvChapiter, tvExam, tvMarks;
+        public TextView tvCourse, tvChapiter, tvExam, tvMarks, tvWeight;
         public RecyclerVHolder(View v){
             super(v);
             tvCourse = v.findViewById(R.id.tv_course);
             tvChapiter = v.findViewById(R.id.tv_chapiter);
             tvExam = v.findViewById(R.id.tv_exam);
             tvMarks = v.findViewById(R.id.tv_mark);
+            tvWeight = v.findViewById(R.id.tv_weight);
         }
     }
 
@@ -47,6 +48,7 @@ public class MarksVAdapter extends RecyclerView.Adapter<MarksVAdapter.RecyclerVH
         holder.tvChapiter.setText(current.getChapiter());
         holder.tvExam.setText(current.getExam());
         holder.tvMarks.setText(current.getUserMarks());
+        holder.tvWeight.setText(current.getMarksWeight());
     }
     public void clearAdapter(){
         markList.clear();

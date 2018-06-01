@@ -19,6 +19,7 @@
 
     <string name="menu_logout">Log out</string>
     <string name="menu_setting">Setting</string>
+    <string name="menu_vew_marks">View marks</string>
     <string name="menu_view">View exercice</string>
 
     <string name="app_name_with_index">PdfRendererBasic (%1$d/%2$d)</string>

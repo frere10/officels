@@ -63,13 +63,14 @@ public class ViewExamActivity extends AppCompatActivity {
             String ipAddress = hashMap.get(IpAddress.IpAttributes.COL_IPADDRESS);
             dataUrl = protocal + "://" + ipAddress + URL_PREFIX + examFile;
         }
-        tvTitle.setText(examTitle);
+//        tvTitle.setText(examTitle);
 
         try {
             new DownloadTask(getApplicationContext(), tvTitle, pdfView, examFile);
+//            openPdfFile(dataUrl);
         }catch (Exception e){
             Log.d("PDF Error", e.toString());
-            Toast.makeText(getApplicationContext(), "Sorry there is an error.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You phone refused to write on External storage", Toast.LENGTH_LONG).show();
         }
         btnDoExam.setOnClickListener(new View.OnClickListener() {
             @Override

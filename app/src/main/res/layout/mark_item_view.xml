@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
@@ -9,50 +9,88 @@
     app:cardUseCompatPadding="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <LinearLayout
-            android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_course"
             android:layout_width="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:text="Course name"
+            android:textAlignment="center"
+            android:textColor="#125688"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_chapiter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:text="Chapiter"
+            android:textColor="#125688"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_exam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:fontFamily="sans-serif"
+            android:text="Exam"
+            android:textColor="#125688"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="Course name"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="#125688"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_course"
-                />
-            <TextView
-                android:layout_marginTop="10dp"
-                android:text="Chapiter"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#125688"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_chapiter"
-                />
-
-            <TextView
-                android:text="Exam"
-                android:layout_width="match_parent"
-                android:fontFamily="sans-serif"
-                android:textSize="14sp"
-                android:textColor="#125688"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_exam"/>
-
-            <TextView
-                android:layout_marginTop="10dp"
-                android:text="10/20"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#129f14"
+                android:id="@+id/tv_mark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_mark"
-                />
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="126dp"
+                android:text="10"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="126dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="51dp"
+                android:text="Out of"
+                android:textColor="#129f14"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="51dp" />
+
+            <TextView
+                android:id="@+id/tv_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="13dp"
+                android:text="20"
+                android:textColor="#080808"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp" />
+        </RelativeLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
