@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         int height = display.getHeight();
 
         if(width < height){
-            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
         }else {
-            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         }
         recyclerView.addItemDecoration(new ItemDivider(getApplicationContext(), LinearLayoutManager.VERTICAL, 32));
         recyclerView.addItemDecoration(new ItemDivider(getApplicationContext(), LinearLayoutManager.HORIZONTAL, 32));

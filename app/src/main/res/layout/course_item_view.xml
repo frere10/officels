@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Course Title"
         android:textColor="#040404"
-        android:textSize="15dip"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="sans" />
     <!--  ListRow Left sied Thumbnail image -->
@@ -44,31 +44,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_c_title"
-        android:layout_marginTop="1dip"
+        android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Chapiters"
         android:textColor="#343434"
-        android:textSize="10dip" />
+        android:textSize="18dip" />
 
     <TextView
         android:id="@+id/tv_assignemt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_chapiters"
-        android:layout_marginTop="1dip"
+        android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Assessments"
         android:textColor="#343434"
-        android:textSize="10dip" />
+        android:textSize="15dip" />
 
     <!-- Rightend Duration -->
     <TextView
         android:id="@+id/tv_created_at"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="5:45"
         android:textColor="#10bcc9"
+        android:textAlignment="viewEnd"
         android:textSize="10dip"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="end" />
 
 </LinearLayout>
