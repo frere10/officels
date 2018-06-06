@@ -20,20 +20,22 @@
         android:id="@+id/pdfView"
         android:layout_below="@+id/tv_header"
         android:layout_width="match_parent"
-        app:layout_heightPercent="70%"/>
+        app:layout_heightPercent="80%"/>
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_below="@id/pdfView"
         android:layout_width="match_parent"
-        app:layout_heightPercent="20%"
+        app:layout_heightPercent="10%"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Click to Answer" />
+            android:id="@+id/tv_out_of"
+            android:textAllCaps="false"
+            android:text="Out of 30" />
 
         <Button
             android:id="@+id/btn_go_to_answer"
@@ -43,5 +45,4 @@
             android:layout_weight="1"
             android:text="@string/next" />
     </LinearLayout>
-
 </android.support.percent.PercentRelativeLayout>

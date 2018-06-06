@@ -90,7 +90,7 @@ public class ExamRequest {
 
                                 exam.setId(chapObj.getString("id"));
                                 exam.setTitle(chapObj.getString("title"));
-                                exam.setMarks("Marks: "+chapObj.getString("marks"));
+                                exam.setMarks(chapObj.getString("marks"));
                                 exam.setFileContent(chapObj.getString("content"));
                                 exam.setCreated(chapObj.getString("created_at"));
                                 exam.setUpdated(chapObj.getString("updated_at"));
@@ -109,6 +109,7 @@ public class ExamRequest {
                                     intent.putExtra("exam_id", exam.getId());
                                     intent.putExtra("exam_title", exam.getTitle());
                                     intent.putExtra("exam_file", exam.getFileContent());
+                                    intent.putExtra("exam_marks", exam.getMarks());
 
                                     context.startActivity(intent);
                                 }

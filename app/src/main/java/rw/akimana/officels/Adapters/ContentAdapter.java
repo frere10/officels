@@ -38,11 +38,8 @@ public class ContentAdapter  extends RecyclerView.Adapter<ContentAdapter.Recycle
         void onItemClickListener(View view, int position, Content content);
     }
     public class RecyclerVHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView tvDetail, tvCreatedAt;
+        public TextView tvDetail, tvCreatedAt, tvNo, tvTitle;
         public NetworkImageView imageViewContent;
-        public ImageView btnSendComment;
-        public EditText etComment;
-        public RecyclerView rvCommentDisplay;
         public RecyclerVHolder(View v){
             super(v);
 
@@ -51,15 +48,9 @@ public class ContentAdapter  extends RecyclerView.Adapter<ContentAdapter.Recycle
 
             tvDetail = v.findViewById(R.id.tv_content_detail);
             tvCreatedAt = v.findViewById(R.id.tv_c_created_at);
+            tvNo = v.findViewById(R.id.tv_no);
+            tvTitle = v.findViewById(R.id.tv_title);
             imageViewContent = v.findViewById(R.id.img_content);
-
-            btnSendComment = v.findViewById(R.id.img_send_comment);
-
-            etComment = v.findViewById(R.id.et_send_comment);
-
-            rvCommentDisplay = v.findViewById(R.id.rv_comment);
-
-            //            v.setOnClickListener(this);
         }
 
         @Override
@@ -83,40 +74,26 @@ public class ContentAdapter  extends RecyclerView.Adapter<ContentAdapter.Recycle
 
     @Override
     public void onBindViewHolder(final RecyclerVHolder holder, int position){
+        int no = position + 1;
         final Content thisContent = contentList.get(position);
+
         holder.tvDetail.setText(thisContent.getDetail());
+        holder.tvNo.setText(String.valueOf(no)+". ");
+        holder.tvTitle.setText(thisContent.getTitle());
         holder.imageViewContent.setImageUrl(thisContent.getImage(), imageLoader);
         holder.tvCreatedAt.setText(thisContent.getCreated());
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-
-        holder.rvCommentDisplay.setLayoutManager(layoutManager);
-
-        CommentVAdapter commentVAdapter = new CommentVAdapter(context, thisContent.getCommentArrayList());
-
-        holder.rvCommentDisplay.addItemDecoration(new ItemDivider(context, LinearLayoutManager.VERTICAL, 16));
-        holder.rvCommentDisplay.setAdapter(commentVAdapter);
-
-        holder.btnSendComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textComment = holder.etComment.getText().toString();
-                String contentId = thisContent.getId();
-
-                if(textComment.isEmpty()) Toast.makeText(context, "Type comment", Toast.LENGTH_LONG).show();
-                else {
-                    ContentRequest contentRequest = new ContentRequest(context, null, "");
-                    contentRequest.sendComment(contentId, textComment);
-                    holder.etComment.setText("");
-                }
-            }
-        });
     }
     public void clearAdapter(){
         contentList.clear();
         notifyDataSetChanged();
     }
+    public void refreshData(){
+        notifyDataSetChanged();
+    }
 
+    public int numOfItems(){
+        return getItemCount();
+    }
     @Override
     public int getItemCount(){
         return contentList.size();

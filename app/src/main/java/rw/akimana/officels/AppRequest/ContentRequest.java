@@ -1,7 +1,6 @@
 package rw.akimana.officels.AppRequest;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import java.util.Map;
 
 import rw.akimana.officels.Adapters.CommentVAdapter;
 import rw.akimana.officels.Adapters.ContentAdapter;
-import rw.akimana.officels.ContentActivity;
 import rw.akimana.officels.Controllers.AppSingleton;
 import rw.akimana.officels.Controllers.DatabaseHelper;
 import rw.akimana.officels.Controllers.SessionManager;
@@ -37,7 +35,6 @@ public class ContentRequest {
     private Context context;
 
     private static final String TAG = "Content Request";
-    private String chapiter_id;
     private String protocol, ipAddress;
 
     private String dataUrl;
@@ -45,23 +42,29 @@ public class ContentRequest {
     private DatabaseHelper helper;
 
     private ArrayList<Content> arrayList = new ArrayList<>();
+    private ArrayList<Comment> commentArrayList = new ArrayList<>();
     private Content content;
+    private Comment comment;
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, commentLv;
     private ContentAdapter contentAdapter;
+    private CommentVAdapter commentVAdapter;
 
+    private int numOfContents;
     private SessionManager sessionManager;
 
-    public ContentRequest(Context context, RecyclerView recyclerView, String chapiter_id){
+    public ContentRequest(Context context, RecyclerView recyclerView, RecyclerView commentRV){
         this.context = context;
         this.recyclerView = recyclerView;
         this.helper = new DatabaseHelper(context);
-        this.chapiter_id = chapiter_id;
+        this.commentLv = commentRV;
+
+        numOfContents = 0;
 
         sessionManager = new SessionManager(context);
     }
 
-    public void displayContentss(){
+    public int displayContentss(final String chapiter_id){
         String cancel_req_tag = "Contents";
 
         String URL_PREFIX = "/officels/apis/contentctrl.php?contents&chap=";
@@ -85,8 +88,11 @@ public class ContentRequest {
                     boolean error = jObj.getBoolean("error");
 
                     if (!error) {
-                        JSONArray array = jObj.getJSONArray("contents");
+                        JSONObject contentObject = jObj.getJSONObject("contents");
+                        JSONArray array = contentObject.getJSONArray("list");
+//                        numOfContents = array.length();
                         for (int i = 0; i < array.length(); i++){
+                            numOfContents ++;
                             JSONObject contentObj = array.getJSONObject(i);
                             content = new Content();
 
@@ -98,26 +104,27 @@ public class ContentRequest {
                             content.setCreated(contentObj.getString("created_at"));
                             content.setUpdated(contentObj.getString("updated_at"));
 
-                            ArrayList<Comment> commentArrayList = new ArrayList<>();
-
-                            JSONArray commArray = contentObj.getJSONArray("comments");
-                            for(int j = 0; j < commArray.length(); j++){
-                                JSONObject commentObj = commArray.getJSONObject(j);
-                                Comment comment = new Comment();
-
-                                comment.setUserName(commentObj.getString("user_names"));
-                                comment.setComment(commentObj.getString("comment"));
-                                comment.setCreated(commentObj.getString("created_at"));
-                                comment.setId(commentObj.getString("id"));
-                                comment.setUpdated(commentObj.getString("updated_at"));
-
-                                commentArrayList.add(comment);
-                            }
-                            content.setCommentArrayList(commentArrayList);
                             arrayList.add(content);
                         }
+                        Log.d("Num----------------", "com: "+numOfContents);
+                        JSONArray commArray = contentObject.getJSONArray("discussions");
+                        for (int j=0; j<commArray.length(); j++){
+                            JSONObject commentObj = commArray.getJSONObject(j);
+                            comment = new Comment();
+
+                            comment.setUserName(commentObj.getString("user_names"));
+                            comment.setComment(commentObj.getString("content"));
+                            comment.setCreated(commentObj.getString("created_at"));
+                            comment.setId(commentObj.getString("id"));
+
+                            commentArrayList.add(comment);
+                        }
                         contentAdapter = new ContentAdapter(context, arrayList);
+                        commentVAdapter = new CommentVAdapter(context, commentArrayList);
                         recyclerView.setAdapter(contentAdapter);
+                        commentLv.setAdapter(commentVAdapter);
+
+                        return;
                     } else {
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
@@ -126,7 +133,6 @@ public class ContentRequest {
                     e.printStackTrace();
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -148,8 +154,10 @@ public class ContentRequest {
         };
         // Adding request to request queue
         AppSingleton.getInstance(context).addToRequestQueue(strReq,cancel_req_tag);
+
+        return numOfContents;
     }
-    public void sendComment(final String contentId, final String comment){
+    public void sendComment(final String chapId, final String comment){
         String cancel_req_tag = "Send comment";
 
         HashMap<String, String> user = sessionManager.getUserDetails();
@@ -175,7 +183,7 @@ public class ContentRequest {
                     boolean error = jObj.getBoolean("error");
 
                     if (!error){
-
+                        contentAdapter.clearAdapter();
                     }else {
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
@@ -196,7 +204,7 @@ public class ContentRequest {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("comment", comment);
-                params.put("content_id", contentId);
+                params.put("chap_id", chapId);
                 params.put("user_id", user_id);
                 return params;
             }

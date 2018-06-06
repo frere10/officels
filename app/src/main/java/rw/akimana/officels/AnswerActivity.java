@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -31,14 +35,14 @@ import rw.akimana.officels.Models.IpAddress;
 
 import static rw.akimana.officels.Controllers.SessionManager.KEY_USER_ID;
 
-public class AnswerActivity extends AppCompatActivity implements View.OnClickListener {
+public class AnswerActivity extends AppCompatActivity implements View.OnClickListener, OnLoadCompleteListener, OnPageChangeListener {
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath, userId, examId, ipAddress, protocal, dataUrl;
-    ImageView ivAttachment;
-    Button bUpload;
-    TextView tvFileName;
+    private PDFView pdfAttachment;
+    private Button bUpload;
+    private TextView tvHeading;
 
     SessionManager sessionManager;
     private HashMap<String, String> hashMap;
@@ -50,9 +54,9 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
 
-        ivAttachment = findViewById(R.id.ivAttachment);
+        pdfAttachment = findViewById(R.id.pdfvAttachment);
         bUpload = findViewById(R.id.b_upload);
-        tvFileName = findViewById(R.id.tv_file_name);
+        tvHeading = findViewById(R.id.tvHeading);
 
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
@@ -77,19 +81,19 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
         }
         userId = hashMap.get(KEY_USER_ID);
 
-        ivAttachment.setOnClickListener(this);
+        tvHeading.setOnClickListener(this);
         bUpload.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
-        if(v== ivAttachment){
+        if(v== tvHeading){
             //on attachment icon click
             showFileChooser();
         }
         if(v== bUpload){
             //on upload button Click
             if(selectedFilePath != null){
-                tvFileName.setText("Uploading File...");
+                tvHeading.setText("Uploading File...");
                 // creating new thread to handle Http Operations
                 new Thread(new Runnable() {
                     @Override
@@ -126,7 +130,18 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                 Log.i(TAG,"Selected File Path:" + selectedFilePath);
 
                 if(selectedFilePath != null && !selectedFilePath.equals("")){
-                    tvFileName.setText(selectedFilePath);
+                    tvHeading.setText("File details");
+                    try {
+                        File file = new File(selectedFilePath);
+                        pdfAttachment.fromFile(file)
+                                .defaultPage(0)
+                                .enableSwipe(true)
+                                .onLoad(this)
+                                .onPageChange(this)
+                                .load();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }else{
                     Toast.makeText(this,"Cannot upload file to server",Toast.LENGTH_SHORT).show();
                 }
@@ -156,7 +171,7 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tvFileName.setText("Source File Doesn't Exist: " + selectedFilePath);
+                    tvHeading.setText("Source File Doesn't Exist: " + selectedFilePath);
                 }
             });
         }else{
@@ -258,7 +273,8 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tvFileName.setText(message);
+                                tvHeading.setTextSize(14);
+                                tvHeading.setText(message);
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                             }
                         });
@@ -268,7 +284,7 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tvFileName.setText(e.getMessage());
+                                tvHeading.setText(e.getMessage());
                                 Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
@@ -291,5 +307,15 @@ public class AnswerActivity extends AppCompatActivity implements View.OnClickLis
                 });
             }
         }
+    }
+
+    @Override
+    public void loadComplete(int nbPages) {
+
+    }
+
+    @Override
+    public void onPageChanged(int page, int pageCount) {
+
     }
 }

@@ -1,45 +1,48 @@
 package rw.akimana.officels;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import rw.akimana.officels.Controllers.CheckPermission;
 import rw.akimana.officels.Controllers.DatabaseHelper;
-import rw.akimana.officels.Controllers.DownloadTask;
+import rw.akimana.officels.Controllers.FileDownloader;
+import rw.akimana.officels.Controllers.Utils;
 import rw.akimana.officels.Models.IpAddress;
 
 public class ViewExamActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    String examId, examFile, examTitle, dataUrl;
+    String examId, examFile, examTitle, dataUrl, examMarks;
     String URL_PREFIX = "/officels/images/ass_files/";
     HashMap<String, String> hashMap;
     DatabaseHelper helper;
 
-    PDFView pdfView;
-    TextView tvTitle;
-    Button btnDoExam;
+    private PDFView pdfView;
+    private TextView tvTitle;
+    private Button btnDoExam;
+
+    private TextView tvOutOf;
+
+    private String extStorageDirectory;
+    private File folder, pdfFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +51,13 @@ public class ViewExamActivity extends AppCompatActivity {
         pdfView = findViewById(R.id.pdfView);
         tvTitle = findViewById(R.id.tv_header);
         btnDoExam = findViewById(R.id.btn_go_to_answer);
+        tvOutOf = findViewById(R.id.tv_out_of);
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             examId = (String) bundle.get("exam_id");
             examTitle = (String) bundle.get("exam_title");
             examFile = (String) bundle.get("exam_file");
+            examMarks = (String) bundle.get("exam_marks");
         }
         helper = new DatabaseHelper(getApplicationContext());
         hashMap = helper.findIpDetails();
@@ -63,14 +68,16 @@ public class ViewExamActivity extends AppCompatActivity {
             String ipAddress = hashMap.get(IpAddress.IpAttributes.COL_IPADDRESS);
             dataUrl = protocal + "://" + ipAddress + URL_PREFIX + examFile;
         }
-//        tvTitle.setText(examTitle);
+        tvOutOf.setText("Out of " + examMarks);
 
         try {
-            new DownloadTask(getApplicationContext(), tvTitle, pdfView, examFile);
+            CheckPermission.verifyStoragePermissions(this);
+            new DownloadFile().execute(dataUrl);
+//            new DownloadTask(getApplicationContext(), tvTitle, pdfView, examFile);
 //            openPdfFile(dataUrl);
         }catch (Exception e){
             Log.d("PDF Error", e.toString());
-            Toast.makeText(getApplicationContext(), "You phone refused to write on External storage", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Sorry something is wrong", Toast.LENGTH_LONG).show();
         }
         btnDoExam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +93,55 @@ public class ViewExamActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.parse(fileName), "application/pdf");
         startActivity(intent);
+    }
+    private class DownloadFile extends AsyncTask<String, Void, Void> implements OnLoadCompleteListener, OnPageChangeListener {
+        @Override
+        protected void onPreExecute() {
+            tvTitle.setText(R.string.downloadStarted);
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
+            String fileName = "downloadFile";  // -> maven.pdf
+            extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+            folder = new File(extStorageDirectory, Utils.downloadDirectory);
+
+            if(!folder.exists()) {
+                folder.mkdir();
+            }
+            pdfFile = new File(folder, examTitle + ".pdf");
+
+            try{
+                tvTitle.setText("Downloading...");
+                pdfFile.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            FileDownloader.downloadFile(fileUrl, pdfFile);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            tvTitle.setText(examTitle);
+            pdfView.fromFile(pdfFile)
+                    .defaultPage(0)
+                    .enableSwipe(true)
+                    .onLoad(this)
+                    .onPageChange(this)
+                    .load();
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        public void loadComplete(int nbPages) {
+
+        }
+
+        @Override
+        public void onPageChanged(int page, int pageCount) {
+
+        }
     }
 }

@@ -24,7 +24,6 @@ public class CommentVAdapter extends RecyclerView.Adapter<CommentVAdapter.Recycl
             tvUser = v.findViewById(R.id.tv_username);
             tvComment = v.findViewById(R.id.tv_comment);
             tvCreatedAt = v.findViewById(R.id.tv_com_created_at);
-
         }
     }
 

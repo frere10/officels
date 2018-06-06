@@ -60,7 +60,7 @@ public class ExamVAdapter extends RecyclerView.Adapter<ExamVAdapter.RecyclerVHol
     public void onBindViewHolder(RecyclerVHolder holder, int position){
         Exam current = examList.get(position);
         holder.tvTitle.setText(current.getTitle());
-        holder.tvMArks.setText(current.getMarks());
+        holder.tvMArks.setText("Marks: "+current.getMarks());
         holder.tvCreatedAt.setText(current.getCreated());
     }
     public void clearAdapter(){

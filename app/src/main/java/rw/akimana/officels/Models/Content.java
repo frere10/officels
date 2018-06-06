@@ -5,15 +5,6 @@ import java.util.ArrayList;
 
 public class Content {
     private String id, title, detail, image, chapiterId, created, updated;
-    private ArrayList<Comment> commentArrayList;
-
-    public ArrayList<Comment> getCommentArrayList() {
-        return commentArrayList;
-    }
-
-    public void setCommentArrayList(ArrayList<Comment> commentArrayList) {
-        this.commentArrayList = commentArrayList;
-    }
 
     public String getId() {
         return id;

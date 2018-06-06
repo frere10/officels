@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
     android:orientation="horizontal">
@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:textColorHint="#CFD8DC"
         android:textColor="#CFD8DC"
-        android:id="@+id/et_send_comment"
+        android:id="@+id/et_comment"
         android:hint="Write a comment" />
 
     <ImageView
